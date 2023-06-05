@@ -1,0 +1,31 @@
+name: Flake8 Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  flake8:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.10
+
+      - name: Install dependencies
+        run: pip install flake8 flake8-django flake8-import-order flake8-builtins flake8-print
+
+      - name: Run Flake8
+        run: flake8
+
+      - name: Run Tests
+        run: python manage.py test
