@@ -5,6 +5,7 @@ from django.utils import timezone
 
 from .models import Question
 
+
 class QuestionDetailViewTests(TestCase):
     def test_future_question(self):
         """
@@ -25,6 +26,8 @@ class QuestionDetailViewTests(TestCase):
         url = reverse('polls:detail', args=(past_question.id,))
         response = self.client.get(url)
         self.assertContains(response, past_question.question_text)
+
+
 def create_question(question_text, days):
     """
     Create a question with the given `question_text` and published the
@@ -91,6 +94,7 @@ class QuestionIndexViewTests(TestCase):
             response.context['latest_question_list'],
             [question2, question1],
         )
+
 
 class QuestionModelTests(TestCase):
 
