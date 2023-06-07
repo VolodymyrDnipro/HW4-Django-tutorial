@@ -1,7 +1,6 @@
 import datetime
 from django.db import models
 from django.utils import timezone
-from django.contrib import admin
 
 
 class Question(models.Model):
@@ -24,11 +23,3 @@ class Choice(models.Model):
 
     def __str__(self):
         return self.choice_text
-
-
-class QuestionAdmin(admin.ModelAdmin):
-    list_display = ['question_text', 'was_published_recently']  # Use 'was_published_recently' method here
-    list_filter = ['pub_date']  # Update with valid fields
-
-
-admin.site.register(Question, QuestionAdmin)
