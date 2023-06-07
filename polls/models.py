@@ -5,6 +5,12 @@ from django.utils import timezone
 
 class Question(models.Model):
     # ...
+    objects = None
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(args, kwargs)
+        self.question_text = None
+
     def was_published_recently(self):
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
