@@ -1,21 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    {% load static %}
+{% extends 'polls/base.html' %}
 
-<link rel="stylesheet" href="{% static 'polls/style.css' %}">
-    <title>Title</title>
-</head>
-<body>
-{% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
-</body>
-</html>
+{% block task %}
+ДЗ 9. Django Forms
+{% endblock %}
+
+{% block container %}
+Выполнять в текущем проекте (можете создать еще одно приложение). <br>
+
+Добавить вью по пути /triangle. На этой вью необходимо использовать форму которая будет принимать значения двух <br>
+катетов треугольника (положительные, больше нуля, для простоты используйте int значения если хотите). <br>
+После отправки формы, если значения были валидными - на этой же странице вывести значение гипотенузы. <br>
+
+Это должна быть одна view <br>
+
+Можете использовать 1 или 2 темплейта при необходимости для рендера формы и результата. <br>
+
+Если один темплейт - значение гипотенузы по умолчанию None - проверяйте его в темплейте, <br>
+и на основании того None или "значение" рендерите форму или значение гипотенузы<br><br>
+
+<code> template.html<br>
+if gip<br>
+  <p> гипотенуза равна gip<br>
+
+form.as_p<br>
+    в этом случае вы не будете использовать redirect </code> <br><br>
+
+Использовать только формы. Модели не нужно.<br>
+TLDR:<br>
+1 form<br>
+1 url<br>
+1 view (get and get+submit)<br>
+1 or 2 template<br>
+redirect - optional
+{% endblock %}

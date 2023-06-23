@@ -1,55 +1,24 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
-from django.views import generic
-from django.utils import timezone
-from .models import Choice, Question
+from django.shortcuts import render
+import math
+from .forms import TriangleForm
 
 
-class IndexView(generic.ListView):
-    template_name = 'polls/index.html'
-    context_object_name = 'latest_question_list'
-
-    def get_queryset(self):
-        """
-        Return the last five published questions (not including those set to be
-        published in the future).
-        """
-        return Question.objects.filter(
-            pub_date__lte=timezone.now()
-        ).order_by('-pub_date')[:5]
+def index(request):
+    return render(request, 'polls/index.html')
 
 
-class DetailView(generic.DetailView):
-    model = Question
-    template_name = 'polls/detail.html'
+def triangle(request):
+    if request.method == 'POST':
+        triangle_form = TriangleForm(request.POST)
 
-    def get_queryset(self):
-        """
-        Excludes any questions that aren't published yet.
-        """
-        return Question.objects.filter(pub_date__lte=timezone.now())
-
-
-class ResultsView(generic.DetailView):
-    model = Question
-    template_name = 'polls/results.html'
-
-
-def vote(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    try:
-        selected_choice = question.choice_set.get(pk=request.POST['choice'])
-    except (KeyError, Choice.DoesNotExist):
-        # Redisplay the question voting form.
-        return render(request, 'polls/detail.html', {
-            'question': question,
-            'error_message': "You didn't select a choice.",
-        })
+        if triangle_form.is_valid():
+            leg_a = triangle_form.cleaned_data['tri_a']
+            print(leg_a)
+            leg_b = triangle_form.cleaned_data['tri_b']
+            hyp = math.sqrt(leg_a ** 2 + leg_b ** 2)
+            content = {'triangle_form': triangle_form, 'hyp': hyp}
+            return render(request, 'polls/triangle.html', content)
     else:
-        selected_choice.votes += 1
-        selected_choice.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+        triangle_form = TriangleForm()
+
+    return render(request, 'polls/triangle.html', {'triangle_form': triangle_form})

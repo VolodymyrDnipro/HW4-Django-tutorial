@@ -1,0 +1,14 @@
+{% extends 'polls/base.html' %}
+
+{% block container %}
+<form method="POST">
+    <div class="form-group">
+        {% csrf_token %}
+        {{ triangle_form.as_p }}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+
+<p>hypotenuse: {{ hyp }}</p>
+
+{% endblock %}
