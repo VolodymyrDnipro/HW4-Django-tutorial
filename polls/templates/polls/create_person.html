@@ -1,0 +1,13 @@
+{% extends 'polls/base.html' %}
+
+{% block container %}
+<h2>ДЗ 10. Django model form</h2> <br>
+<h4>Create Person</h4>
+<form method="post">
+    <div class="form-group">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Create</button>
+    </div>
+</form>
+{% endblock %}
