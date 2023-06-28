@@ -40,3 +40,9 @@ class Response(models.Model):
     choice = models.OneToOneField(Choice, on_delete=models.CASCADE)
     respondent_name = models.CharField(max_length=100)
     response_date = models.DateField()
+
+
+class Person(models.Model):
+    first_name = models.CharField(max_length=20)
+    last_name = models.CharField(max_length=20)
+    email = models.EmailField(unique=True)
