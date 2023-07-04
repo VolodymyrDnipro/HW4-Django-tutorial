@@ -1,6 +1,7 @@
 import datetime
 from django.db import models
 from django.utils import timezone
+from jsonfield import JSONField
 
 
 class Pollster(models.Model):
@@ -46,3 +47,13 @@ class Person(models.Model):
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
     email = models.EmailField(unique=True)
+
+
+class Log(models.Model):
+    path = models.TextField()
+    method = models.CharField(max_length=10)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    body = models.TextField()
+    query = models.TextField()
+    json = JSONField()
+
