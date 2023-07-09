@@ -35,8 +35,8 @@ class ManufacturerCountry(models.Model):
     def __str__(self):
         return f"{self.engine.name}, {self.engine.power}"
 
-    def get_absolute_url(self):
-        return reverse("country-detail", args=[str(self.id)])
+    # def get_absolute_url(self):
+    #     return reverse("country-detail", args=[str(self.id)])
 
 
 class Car(models.Model):
@@ -51,7 +51,7 @@ class Car(models.Model):
         return self.model
 
     def get_absolute_url(self):
-        return reverse("car-detail", args=[str(self.id)])
+        return reverse("car_detail", args=[str(self.id)])
 
 
 class CarShop(models.Model):
