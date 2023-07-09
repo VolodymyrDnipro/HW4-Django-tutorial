@@ -1,0 +1,13 @@
+{% extends 'shop/base.html' %}
+
+{% block container %}
+ <h1>Car Detail</h1>
+
+ <h2>{{ car.model }}</h2>
+ <p>Engine: {{ car.engine }}</p>
+ <p>Body: {{ car.body }}</p>
+ <p>Transmission: {{ car.transmission }}</p>
+ <p>Color: {{ car.color }}</p>
+ <p>Manufacture Date: {{ car.manufacture_date }}</p>
+
+{% endblock %}
