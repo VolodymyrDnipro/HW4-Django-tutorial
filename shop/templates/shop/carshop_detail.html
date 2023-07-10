@@ -1,0 +1,12 @@
+{% extends 'shop/base.html' %}
+
+{% block container %}
+<h1>Car Shop Detail</h1>
+
+<h4>{{ carshop.car.model }}</h4>
+<p>Count: {{ carshop.count }}</p>
+<p>Receipt Date: {{ carshop.receipt_date }}</p>
+
+<p>Total Count: {{ carshop.total_count }}</p>
+
+{% endblock %}

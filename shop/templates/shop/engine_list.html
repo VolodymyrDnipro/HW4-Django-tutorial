@@ -1,0 +1,29 @@
+{% extends 'shop/base.html' %}
+
+{% block container %}
+<h1>Engine List</h1>
+
+{% if engine_list %}
+<ul>
+    {% for engine in engine_list %}
+        <h5>{{ engine.name }}</h5>
+        <p><a href="{% url 'shop:engine_detail' engine.id %}">View Details</a></p>
+
+    {% endfor %}
+</ul>
+{% else %}
+<p>No engines available.</p>
+{% endif %}
+
+<div class="pagination">
+    {% if engine_list.has_previous %}
+    <a href="?page={{ engine_list.previous_page_number }}">previous</a>
+    {% endif %}
+    <span class="current-page">{{ engine_list.number }}</span>
+    <span class="total-pages">of {{ engine_list.paginator.num_pages }}</span>
+    {% if engine_list.has_next %}
+    <a href="?page={{ engine_list.next_page_number }}">next</a>
+    {% endif %}
+</div>
+
+{% endblock %}

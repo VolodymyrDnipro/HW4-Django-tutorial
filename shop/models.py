@@ -1,12 +1,15 @@
 from django.db import models
 from django.urls import reverse
-
+from django.db.models import Case, IntegerField, Value, When
 
 class Color(models.Model):
     name = models.CharField(max_length=200)
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("shop:color_detail", args=[str(self.id)])
 
 
 class Transmission(models.Model):
@@ -25,7 +28,13 @@ class Engine(models.Model):
         return f"{self.name}, {self.type_engine} ({self.power} hp.)"
 
     def get_absolute_url(self):
-        return reverse("engine-detail", args=[str(self.id)])
+        return reverse("shop:engine_detail", args=[str(self.id)])
+
+    def get_power_range(self):
+        return self.power
+
+    class Meta:
+        ordering = ['name']
 
 
 class ManufacturerCountry(models.Model):
@@ -35,8 +44,8 @@ class ManufacturerCountry(models.Model):
     def __str__(self):
         return f"{self.engine.name}, {self.engine.power}"
 
-    # def get_absolute_url(self):
-    #     return reverse("country-detail", args=[str(self.id)])
+    def get_absolute_url(self):
+        return reverse("shop:manufacturercountry_detail", args=[str(self.id)])
 
 
 class Car(models.Model):
@@ -51,7 +60,7 @@ class Car(models.Model):
         return self.model
 
     def get_absolute_url(self):
-        return reverse("car_detail", args=[str(self.id)])
+        return reverse("shop:car_detail", args=[str(self.id)])
 
 
 class CarShop(models.Model):
@@ -63,6 +72,6 @@ class CarShop(models.Model):
         return f"{self.car.model} ({self.count} pcs.)"
 
     def get_absolute_url(self):
-        return reverse("shop-detail", args=[str(self.id)])
+        return reverse("shop:carshop_detail", args=[str(self.id)])
 
 

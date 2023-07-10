@@ -1,0 +1,19 @@
+{% extends 'shop/base.html' %}
+
+{% block container %}
+<h1>Engine Detail</h1>
+
+<h4>{{ engine.name }}</h4>
+<p>Power: {{ engine.power }}</p>
+<p>Type engine: {{ engine.type_engine }}</p>
+<p>Power Range: {{ engine.power_range }}</p>
+
+
+{% if manufacturercountry %}
+<p>Manufacturer Country: {{ manufacturercountry.country }}</p>
+{% else %}
+<p>Manufacturer Country: N/A</p>
+{% endif %}
+
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'shop/base.html' %}
+
+{% block container %}
+<h1>Manufacturer Country List</h1>
+
+{% if manufacturercountry_list %}
+<ul>
+    {% for manufacturercountry in manufacturercountry_list %}
+    <h5>{{ manufacturercountry.country }}</h5>
+    <p><a href="{% url 'shop:manufacturercountry_detail' manufacturercountry.id %}">View Details</a></p>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No manufacturer country available.</p>
+{% endif %}
+
+
+<div class="pagination">
+    {% if manufacturercountry_list.has_previous %}
+    <a href="?page={{ manufacturercountry_list.previous_page_number }}">previous</a>
+    {% endif %}
+    <span class="current-page">{{ manufacturercountry_list.number }}</span>
+    <span class="total-pages">of {{ manufacturercountry_list.paginator.num_pages }}</span>
+    {% if manufacturercountry_list.has_next %}
+    <a href="?page={{ manufacturercountry_list.next_page_number }}">next</a>
+    {% endif %}
+</div>
+{% endblock %}

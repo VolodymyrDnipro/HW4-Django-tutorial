@@ -1,0 +1,27 @@
+{% extends 'shop/base.html' %}
+
+{% block container %}
+<h1>Color List</h1>
+
+{% if color_list %}
+<ul>
+    {% for color in color_list %}
+    <h5>{{ color.name }}</h5>
+    <p><a href="{% url 'shop:color_detail' color.id %}">View Details</a></p>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No engine available.</p>
+{% endif %}
+<div class="pagination">
+    {% if engine_list.has_previous %}
+    <a href="?page={{ color_list.previous_page_number }}">previous</a>
+    {% endif %}
+    <span class="current-page">{{ color_list.number }}</span>
+    <span class="total-pages">of {{ color_list.paginator.num_pages }}</span>
+    {% if color_list.has_next %}
+    <a href="?page={{ color_list.next_page_number }}">next</a>
+    {% endif %}
+</div>
+
+{% endblock %}
