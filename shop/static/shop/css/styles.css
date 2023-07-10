@@ -4,4 +4,23 @@ li a {
 .container{
     margin-top: 70px;
 }
+.pagination {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.pagination a {
+    margin: 0 5px;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #000;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.pagination .current-page {
+    font-weight: bold;
+    margin: 0 5px;
+}

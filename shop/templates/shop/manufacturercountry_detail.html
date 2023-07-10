@@ -1,0 +1,10 @@
+{% extends 'shop/base.html' %}
+
+{% block container %}
+    <h1>Manufacturer Country Detail</h1>
+
+    <p>Engine: {{ manufacturercountry.engine }}</p>
+    <p>Country: {{ manufacturercountry.country }}</p>
+
+    <a href="{% url 'shop:engine_detail' manufacturercountry.engine.id %}">View Engine</a>
+{% endblock %}

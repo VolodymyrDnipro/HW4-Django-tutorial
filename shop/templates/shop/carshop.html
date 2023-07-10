@@ -1,11 +1,25 @@
 {% extends 'shop/base.html' %}
 
 {% block container %}
-<form method="POST">
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Submit</button>
+    <h1>Car Shop list</h1>
+
+    {% for shop in shop_list %}
+
+            <h5>{{ shop.car.model }}</h5>
+           <p><a href="{% url 'shop:carshop_detail' shop.id %}">View Details</a></p>
+
+    {% empty %}
+        <p>No cars available in the car shop.</p>
+    {% endfor %}
+
+    <div class="pagination">
+        {% if shop_list.has_previous %}
+            <a href="?page={{ shop_list.previous_page_number }}">previous</a>
+        {% endif %}
+        <span class="current-page">{{ shop_list.number }}</span>
+        <span class="total-pages">of {{ shop_list.paginator.num_pages }}</span>
+        {% if shop_list.has_next %}
+            <a href="?page={{ shop_list.next_page_number }}">next</a>
+        {% endif %}
     </div>
-</form>
-
-
 {% endblock %}

@@ -1,13 +1,17 @@
 {% extends 'shop/base.html' %}
 
 {% block container %}
- <h1>Car Detail</h1>
+<h1>Car Detail</h1>
 
- <h2>{{ car.model }}</h2>
- <p>Engine: {{ car.engine }}</p>
- <p>Body: {{ car.body }}</p>
- <p>Transmission: {{ car.transmission }}</p>
- <p>Color: {{ car.color }}</p>
- <p>Manufacture Date: {{ car.manufacture_date }}</p>
+<h4>{{ car.model }}</h4>
+<p>Body: {{ car.body }}</p>
+<p>Engine: {{ car.engine.name }}</p>
+<p>Power: {{ car.engine.power }}</p>
+<p>Type engine: {{ car.engine.type_engine }}</p>
+<p>Transmission: {{ car.transmission.name }}</p>
+<p>Color: {{ car.color.name }}</p>
+<p>Manufacture Date: {{ car.manufacture_date }}</p>
+
+<p>Total Count in Shop: {{ car.total_count }}</p>
 
 {% endblock %}

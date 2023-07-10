@@ -1,18 +1,27 @@
 {% extends 'shop/base.html' %}
 
 {% block container %}
- <h1>Car List</h1>
+<h1>Car List</h1>
 
-  {% if cars_list %}
-    <ul>
-      {% for car in cars_list %}
-        <li>
-          <a href="{{ car.get_absolute_url }}">{{ car.model }}</a>
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>No cars available.</p>
-  {% endif %}
+{% if cars_list %}
+<ul>
+    {% for car in cars_list %}
+     <h5>{{ car.model }}</h5>
+    <p><a href="{% url 'shop:car_detail' car.id %}">View Details</a></p>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No cars available.</p>
+{% endif %}
+<div class="pagination">
+    {% if cars_list.has_previous %}
+    <a href="?page={{ cars_list.previous_page_number }}">previous</a>
+    {% endif %}
+    <span class="current-page">{{ cars_list.number }}</span>
+    <span class="total-pages">of {{ cars_list.paginator.num_pages }}</span>
+    {% if cars_list.has_next %}
+    <a href="?page={{ cars_list.next_page_number }}">next</a>
+    {% endif %}
+</div>
 
 {% endblock %}
