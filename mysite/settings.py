@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'polls',
     'shop',
+    'django_celery_results',
+    'djcelery_email',
 ]
 
 MIDDLEWARE = [
@@ -141,3 +143,20 @@ INTERNAL_IPS = [
     "127.0.0.1",
     # ...
 ]
+
+# Celery
+
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_BROKER_URL = 'amqp://admin:admin@localhost:5672'
+
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = TIME_ZONE
+
+# Настройки для django-celery-email
+# EMAIL_BACKEND = 'django_celery_email.backends.CeleryEmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+NOREPLY_EMAIL = 'noreply@hillel.io'

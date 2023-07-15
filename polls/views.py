@@ -2,6 +2,13 @@ from django.shortcuts import render, get_object_or_404, redirect
 import math
 from .forms import TriangleForm, PersonForm
 from .models import Person
+from django.core.mail import send_mail
+from django.conf import settings
+from django.utils import timezone
+from .tasks import send_email_task
+
+
+from .forms import ReminderForm
 
 
 def index(request):
@@ -46,3 +53,22 @@ def edit_person(request, id):
     else:
         form = PersonForm(instance=person)
     return render(request, 'polls/edit_person.html', {'form': form})
+
+
+def reminder_create(request):
+    if request.method == 'POST':
+        form = ReminderForm(request.POST)
+        if form.is_valid():
+            from_email = form.cleaned_data['from_email']
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+            send_at = form.cleaned_data['datetime']
+
+            send_email_task.delay(subject, message, from_email, send_at)
+
+            return render(request, 'polls/email.html', {'form': form, 'success': True})
+    else:
+        form = ReminderForm()
+
+    return render(request, 'polls/email.html', {'form': form})
+

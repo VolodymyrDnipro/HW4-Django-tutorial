@@ -38,3 +38,5 @@ traitlets==5.9.0
 typing_extensions==4.6.2
 wcwidth==0.2.6
 wrapt==1.15.0
+
+celery~=5.3.1

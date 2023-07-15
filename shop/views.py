@@ -4,8 +4,6 @@ from django.core.paginator import Paginator
 from django.db.models import Case, When, Value, CharField, Count, Sum
 
 
-
-
 def index(request):
     return render(request, 'shop/index.html')
 
@@ -31,6 +29,7 @@ def carshop_detail(request, carshop_id):
         'carshop': carshop_prefetched
     }
     return render(request, 'shop/carshop_detail.html', context=context)
+
 
 def engine_list(request):
     engine_list = Engine.objects.all()
@@ -62,7 +61,6 @@ def engine_detail(request, engine_id):
     return render(request, 'shop/engine_detail.html', context=context)
 
 
-
 def car_list(request):
     cars_list = Car.objects.all()
     paginator = Paginator(cars_list, 10)
@@ -72,6 +70,7 @@ def car_list(request):
         'cars_list': page_obj
     }
     return render(request, 'shop/car_list.html', context=context)
+
 
 def car_detail(request, car_id):
     car = get_object_or_404(Car, id=car_id)
@@ -89,6 +88,7 @@ def car_detail(request, car_id):
     }
     return render(request, 'shop/car_detail.html', context=context)
 
+
 def manufacturercountry_list(request):
     manufacturercountry_list = ManufacturerCountry.objects.all()
     paginator = Paginator(manufacturercountry_list, 10)
@@ -99,12 +99,14 @@ def manufacturercountry_list(request):
     }
     return render(request, 'shop/manufacturercountry_list.html', context=context)
 
+
 def manufacturercountry_detail(request, manufacturercountry_id):
     manufacturercountry = get_object_or_404(ManufacturerCountry, id=manufacturercountry_id)
     context = {
         'manufacturercountry': manufacturercountry
     }
     return render(request, 'shop/manufacturercountry_detail.html', context=context)
+
 
 def color_list(request):
     color_list = Color.objects.all()
@@ -115,6 +117,7 @@ def color_list(request):
         'color_list': page_obj
     }
     return render(request, 'shop/color_list.html', context=context)
+
 
 def color_detail(request, color_id):
     color = get_object_or_404(Color, id=color_id)

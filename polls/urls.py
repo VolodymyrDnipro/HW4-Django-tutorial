@@ -7,5 +7,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('triangle', views.triangle, name='triangle'),
     path('person/', views.create_person, name='create_person'),
+    path('email', views.reminder_create, name='email'),
     path('person/<int:id>', views.edit_person, name='edit_person'),
 ]

@@ -57,3 +57,9 @@ class Log(models.Model):
     query = models.TextField()
     json = JSONField()
 
+
+class Reminder(models.Model):
+    email = models.EmailField()
+    text = models.TextField()
+    datetime = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
