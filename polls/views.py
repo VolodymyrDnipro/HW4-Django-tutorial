@@ -7,6 +7,8 @@ from django.conf import settings
 from django.utils import timezone
 from .tasks import send_email_task
 
+from datetime import datetime, timezone
+
 
 from .forms import ReminderForm
 
@@ -63,8 +65,12 @@ def reminder_create(request):
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
             send_at = form.cleaned_data['datetime']
-
-            send_email_task.delay(subject, message, from_email, send_at)
+            now_utc = datetime.now(timezone.utc)
+            print(now_utc)
+            future_time = send_at.astimezone(timezone.utc)
+            print(future_time)
+            if future_time > now_utc:
+                send_email_task.apply_async(args=[subject, message, from_email], eta=future_time)
 
             return render(request, 'polls/email.html', {'form': form, 'success': True})
     else:
