@@ -11,7 +11,7 @@ from django.conf import settings
 def send_email_no_quotes_left():
     subject = "Empty"
     message = "no quotes"
-    recipient_list = "example@mail.com"
+    recipient_list = ["example@mail.com"]
 
     send_mail(subject, message, settings.NOREPLY_EMAIL, recipient_list)
 

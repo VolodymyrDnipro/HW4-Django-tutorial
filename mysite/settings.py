@@ -161,18 +161,18 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
-# CELERY_BEAT_SCHEDULE = {
-#     'scrape-quotes-every-odd-hour': {
-#         'task': 'quotes_app.tasks.scrape_quotes',
-#         'schedule': crontab(hour='1-23/2'),
-#     },
-# }
 CELERY_BEAT_SCHEDULE = {
-    'scrape-quotes-every-5-seconds': {
+    'scrape-quotes-every-odd-hour': {
         'task': 'quotes_app.tasks.scrape_quotes',
-        'schedule': timedelta(seconds=5),
+        'schedule': crontab(hour='1-23/2'),
     },
 }
+# CELERY_BEAT_SCHEDULE = {
+#     'scrape-quotes-every-5-seconds': {
+#         'task': 'quotes_app.tasks.scrape_quotes',
+#         'schedule': timedelta(seconds=5),
+#     },
+# }
 
 # Настройки для django-celery-email
 # EMAIL_BACKEND = 'django_celery_email.backends.CeleryEmailBackend'
