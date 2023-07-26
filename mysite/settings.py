@@ -70,7 +70,10 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [
+            BASE_DIR / 'templates',
+            BASE_DIR / 'shop' / 'templates'
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -178,3 +181,6 @@ CELERY_BEAT_SCHEDULE = {
 # EMAIL_BACKEND = 'django_celery_email.backends.CeleryEmailBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 NOREPLY_EMAIL = 'noreply@hillel.io'
+
+LOGIN_URL = '/shop/login/'
+LOGOUT_URL = '/shop/logout/'
