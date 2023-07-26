@@ -3,6 +3,11 @@ from .models import Car, CarShop, Engine, ManufacturerCountry, Color
 from django.core.paginator import Paginator
 from django.db.models import Case, When, Value, CharField, Count, Sum
 
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+
+
 
 def index(request):
     return render(request, 'shop/index.html')
@@ -107,21 +112,61 @@ def manufacturercountry_detail(request, manufacturercountry_id):
     }
     return render(request, 'shop/manufacturercountry_detail.html', context=context)
 
+#
+# def color_list(request):
+#     color_list = Color.objects.all()
+#     paginator = Paginator(color_list, 10)
+#     page_number = request.GET.get('page')
+#     page_obj = paginator.get_page(page_number)
+#     context = {
+#         'color_list': page_obj
+#     }
+#     return render(request, 'shop/color_list.html', context=context)
+#
+# #
+# # def color_detail(request, color_id):
+# #     color = get_object_or_404(Color, id=color_id)
+# #     context = {
+# #         'color': color
+# #     }
+# #     return render(request, 'shop/color_detail.html', context=context)
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-def color_list(request):
-    color_list = Color.objects.all()
-    paginator = Paginator(color_list, 10)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    context = {
-        'color_list': page_obj
-    }
-    return render(request, 'shop/color_list.html', context=context)
+from django.contrib.auth.forms import AuthenticationForm
+from django.views.generic import FormView
 
+class LoginView(FormView):
+    template_name = 'registration/login.html'
+    form_class = AuthenticationForm
+    success_url = '/shop/'
 
-def color_detail(request, color_id):
-    color = get_object_or_404(Color, id=color_id)
-    context = {
-        'color': color
-    }
-    return render(request, 'shop/color_detail.html', context=context)
+class LoginRequiredColorMixin(LoginRequiredMixin):
+    login_url = '/shop/login/'
+
+class ColorListView(LoginRequiredColorMixin, ListView):
+    model = Color
+    template_name = 'shop/color_list.html'
+    context_object_name = 'colors'
+    paginate_by = 10
+
+class ColorCreateView(LoginRequiredColorMixin, CreateView):
+    model = Color
+    template_name = 'shop/color_create.html'
+    fields = ['name']
+    success_url = reverse_lazy('shop:color_list')
+
+class ColorUpdateView(LoginRequiredColorMixin, UpdateView):
+    model = Color
+    template_name = 'shop/color_update.html'
+    fields = ['name']
+    success_url = reverse_lazy('shop:color_list')
+
+class ColorDeleteView(LoginRequiredColorMixin, DeleteView):
+    model = Color
+    template_name = 'shop/color_delete.html'
+    success_url = reverse_lazy('shop:color_list')
+
+class ColorDetailView(LoginRequiredColorMixin, DetailView):
+    model = Color
+    template_name = 'shop/color_detail.html'
+    context_object_name = 'color'

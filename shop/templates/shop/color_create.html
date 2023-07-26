@@ -1,0 +1,10 @@
+
+{% block content %}
+  <h2>Create Color</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create Color</button>
+  </form>
+  <a href="{% url 'shop:color_list' %}">Back to Color List</a>
+{% endblock %}
