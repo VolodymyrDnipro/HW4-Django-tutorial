@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('polls/', include('polls.urls')),
     path('shop/', include('shop.urls')),
+    path('quotes/', include('quotes.urls')),
     path('admin/', admin.site.urls),
     path("__debug__/", include("debug_toolbar.urls")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
