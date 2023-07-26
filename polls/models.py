@@ -53,9 +53,9 @@ class Log(models.Model):
     path = models.TextField()
     method = models.CharField(max_length=10)
     timestamp = models.DateTimeField(auto_now_add=True)
-    body = models.TextField()
-    query = models.TextField()
-    json = JSONField()
+    body = models.TextField(null=True)
+    query = models.TextField(null=True)
+    json = JSONField(null=True)
 
 
 class Reminder(models.Model):
