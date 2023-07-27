@@ -4,10 +4,11 @@ from django.core.paginator import Paginator
 from django.db.models import Case, When, Value, CharField, Count, Sum
 
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
-
-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import AuthenticationForm
+from django.views.generic import FormView
+from django.core.cache import cache
 
 def index(request):
     return render(request, 'shop/index.html')
@@ -130,10 +131,7 @@ def manufacturercountry_detail(request, manufacturercountry_id):
 # #         'color': color
 # #     }
 # #     return render(request, 'shop/color_detail.html', context=context)
-from django.contrib.auth.mixins import LoginRequiredMixin
 
-from django.contrib.auth.forms import AuthenticationForm
-from django.views.generic import FormView
 
 class LoginView(FormView):
     template_name = 'registration/login.html'
@@ -147,7 +145,31 @@ class ColorListView(LoginRequiredColorMixin, ListView):
     model = Color
     template_name = 'shop/color_list.html'
     context_object_name = 'colors'
-    paginate_by = 10
+    paginate_by = 100000
+
+    def get_colors_from_model(self):
+        colors_queryset = Color.objects.all()
+        data = list(colors_queryset.values_list('id', 'name'))
+        cache.set("colors_list", data, timeout=300)
+
+    def get(self, request, *args, **kwargs):
+        self.get_colors_from_model()
+        return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        data_from_redis = cache.get("colors_list")
+
+        if data_from_redis is not None:
+            context['data_from_redis'] = data_from_redis
+        else:
+            colors_queryset = Color.objects.all()
+            data = list(colors_queryset.values_list('id', 'name'))
+            context['data_from_redis'] = data
+
+        return context
+
+
 
 class ColorCreateView(LoginRequiredColorMixin, CreateView):
     model = Color

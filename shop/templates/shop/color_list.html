@@ -4,13 +4,14 @@
 <h3>Color List</h3>
 
 {% if colors %}
-<ul>
+
 
 {% for color in colors %}
-    <h6>{{ color.name }}</h6>
-  <a href="{% url 'shop:color_detail' color.pk %}">{{ color.name }}</a>
-        <a href="{% url 'shop:color_update' color.pk %}">Edit</a>
-        <a href="{% url 'shop:color_delete' color.pk %}">Delete</a>
+        <p>
+            <b><a href="{% url 'shop:color_detail' color.pk %}">{{ color.name }}</a></b>
+            <a href="{% url 'shop:color_update' color.pk %}"> Edit</a>
+            <a href="{% url 'shop:color_delete' color.pk %}"> Delete</a>
+        </p>
 {% endfor %}
 </ul>
 {% else %}
