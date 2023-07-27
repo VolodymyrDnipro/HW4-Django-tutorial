@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from datetime import timedelta
 from pathlib import Path
-
+from django_redis.cache import RedisCache
 from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -184,3 +184,14 @@ NOREPLY_EMAIL = 'noreply@hillel.io'
 
 LOGIN_URL = '/shop/login/'
 LOGOUT_URL = '/shop/logout/'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/0',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
+CACHE_TTL = 300
